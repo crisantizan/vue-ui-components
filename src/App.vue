@@ -1,9 +1,11 @@
 <template>
   <div id="app">
-    <VDropdown v-slot="{ show, toggleFn }">
-      <button @click="toggleFn">Toggle</button>
-      <VDropdownMenu :show="show"></VDropdownMenu>
-    </VDropdown>
+    <div class="center">
+      <VDropdown v-slot="{ show, toggleFn }">
+        <button @click="toggleFn">Toggle</button>
+        <VDropdownMenu align-right :show="show"></VDropdownMenu>
+      </VDropdown>
+    </div>
   </div>
 </template>
 
@@ -19,3 +21,10 @@ export default {
   },
 };
 </script>
+
+<style>
+  .center {
+    display: flex;
+    justify-content: center;
+  }
+</style>

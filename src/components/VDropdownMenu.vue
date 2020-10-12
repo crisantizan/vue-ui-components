@@ -1,11 +1,18 @@
 <template>
-	<div v-show="$props.show" class="VDropdown__menu">Menu</div>
+	<div
+		v-show="$props.show"
+		class="VDropdown__menu"
+		:class="{ 'VDropdown__menu--right': $props.alignRight }"
+	>
+		Menu
+	</div>
 </template>
 
 <script>
 export default {
 	props: {
 		show: { type: Boolean, default: false },
+		alignRight: { type: Boolean, default: false },
 	},
 };
 </script>
@@ -13,8 +20,6 @@ export default {
 <style scoped>
 .VDropdown__menu {
 	position: absolute;
-	top: 100%;
-	left: 0;
 	z-index: 1000;
 	display: block;
 	float: left;
@@ -29,10 +34,16 @@ export default {
 	background-clip: padding-box;
 	border: 1px solid rgba(0, 0, 0, 0.15);
 	border-radius: 0.25rem;
+	transform: translate3d(0px, 28px, 0px);
+	will-change: transform;
 
-	/*	transform: translate3d(0px, 28px, 0px);
 	top: 0px;
 	left: 0px;
-	will-change: transform;*/
+	/*right: auto;*/
+}
+
+.VDropdown__menu--right {
+	right: 0px;
+	left: auto;
 }
 </style>
