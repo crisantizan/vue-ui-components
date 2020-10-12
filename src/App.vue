@@ -6,7 +6,7 @@
         <VDropdownMenu align-right :show="show"></VDropdownMenu>
       </VDropdown>
     </div>
-  </div>
+  </div>  
 </template>
 
 <script>

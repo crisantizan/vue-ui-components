@@ -3,6 +3,7 @@
 		v-show="$props.show"
 		class="VDropdown__menu"
 		:class="{ 'VDropdown__menu--right': $props.alignRight }"
+		:style="{ transform: transform }"
 	>
 		Menu
 	</div>
@@ -13,6 +14,16 @@ export default {
 	props: {
 		show: { type: Boolean, default: false },
 		alignRight: { type: Boolean, default: false },
+		top: {
+			type: String,
+			default: '28px',
+		},
+	},
+
+	computed: {
+		transform() {
+			return `translate3d(0px, ${this.$props.top}, 0px)`;
+		},
 	},
 };
 </script>
@@ -34,12 +45,11 @@ export default {
 	background-clip: padding-box;
 	border: 1px solid rgba(0, 0, 0, 0.15);
 	border-radius: 0.25rem;
-	transform: translate3d(0px, 28px, 0px);
+	/*transform: translate3d(0px, 28px, 0px);*/
 	will-change: transform;
 
 	top: 0px;
 	left: 0px;
-	/*right: auto;*/
 }
 
 .VDropdown__menu--right {
