@@ -2,10 +2,14 @@
 	<div
 		v-show="$props.show"
 		class="VDropdown__menu"
-		:class="{ 'VDropdown__menu--right': $props.alignRight }"
+		:class="{
+			'VDropdown__menu--right': $props.alignRight,
+			'VDropdown__menu--submenu': $props.submenu,
+		}"
 		:style="{ transform: transform }"
+		:ref="id"
 	>
-		Menu
+		<slot></slot>
 	</div>
 </template>
 
@@ -18,11 +22,55 @@ export default {
 			type: String,
 			default: '28px',
 		},
+		submenu: { type: Boolean, default: false },
 	},
 
+	data: () => ({
+		id: `menu${Date.now()}`,
+	}),
+
 	computed: {
-		transform() {
+		translateX() {
+			return this.$props.submenu ? 'translateX(100%)' : '';
+		},
+
+		translate3d() {
 			return `translate3d(0px, ${this.$props.top}, 0px)`;
+		},
+
+		transform() {
+			if (this.$props.submenu) {
+				return this.translateX;
+			}
+
+			return `${this.translate3d} ${this.translateX}`;
+		},
+	},
+
+	destroyed() {
+		document.removeEventListener('click', this.handleClickOutside);
+	},
+
+	watch: {
+		show(val, oldVal) {
+			if (val) {
+				setTimeout(() => {
+					document.addEventListener('click', this.handleClickOutside);
+				}, 10);
+			} else {
+				document.removeEventListener('click', this.handleClickOutside);
+			}
+		},
+	},
+
+	methods: {
+		handleClickOutside(event) {
+			// console.log(this.$refs[this.id]);
+			// clicked outside
+			if (this.$refs[this.id] && !this.$refs[this.id].contains(event.target)) {
+				console.log('close');
+				this.$emit('onclose', true);
+			}
 		},
 	},
 };
@@ -35,7 +83,6 @@ export default {
 	display: block;
 	float: left;
 	min-width: 10rem;
-	padding: 0.5rem 0;
 	margin: 0.125rem 0 0;
 	font-size: 1rem;
 	color: #212529;
@@ -55,5 +102,9 @@ export default {
 .VDropdown__menu--right {
 	right: 0px;
 	left: auto;
+}
+
+.VDropdown__menu--submenu {
+	transform: translateX(100%);
 }
 </style>
