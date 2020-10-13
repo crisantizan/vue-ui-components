@@ -8,9 +8,14 @@
           <VDropdownItem>Hola</VDropdownItem>
           <VDropdownItem>Mundo</VDropdownItem>
 
-          <VDropdown v-slot="{ show, toggleFn }">
-            <VDropdownItem @click="toggleFn">Toggle Func</VDropdownItem>
-            <VDropdownMenu submenu align-right :show="show" @onclose="toggleFn">
+          <VDropdown v-slot="sub">
+            <VDropdownItem @click="sub.toggleFn">Toggle Func</VDropdownItem>
+            <VDropdownMenu
+              submenu
+              align-right
+              :show="sub.show"
+              @onclose="sub.toggleFn"
+            >
               <VDropdownItem>HolaC</VDropdownItem>
               <VDropdownItem>MundoC</VDropdownItem>
               <VDropdownItem>MundialC</VDropdownItem>
